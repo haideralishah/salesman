@@ -1,0 +1,11 @@
+<h1>Welcome to {{companyData.CompanyName}}</h1>
+
+
+<div layout="row">
+    <md-button class="md-raised md-primary cprofileButtonMarginRight " ng-click="createSalesman()">New Salesman</md-button>
+
+    <md-button class="md-raised md-primary  cprofileButtonMarginLeft" ng-click="createProduct()">New Products</md-button>
+
+</div>
+
+<div ng-repeat="sm in salesMan">{{sm.salesmanName}}</div>

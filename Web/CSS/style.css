@@ -1,0 +1,25 @@
+.header{
+    background-color: #a2c5ff !important;
+    padding: 1%;
+
+}
+
+.centerAlignment{
+    position: relative;
+    top: 10%;
+    width: 30%;
+    margin: 0 auto;
+
+}
+
+
+.cprofileButtonMarginLeft{
+    margin-left: 10%;
+
+
+}
+
+
+.cprofileButtonMarginRight{
+    margin-right: 10%;
+}

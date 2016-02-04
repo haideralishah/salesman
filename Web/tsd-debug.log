@@ -1,0 +1,26 @@
+[ERR!] cwd  : d:\New folder\Studies\Sailani PROGRAMES\assignments\Sales Man Application\server\Web
+[ERR!] os   : Windows_NT 6.3.9600
+[ERR!] argv : "node" "C:\\Users\\haider\\AppData\\Roaming\\npm\\node_modules\\tsd\\build\\cli.js" "install" "angular" "--save"
+[ERR!] node : v0.12.7
+[ERR!] tsd  : 0.6.5
+[ERR!] Error: connect ETIMEDOUT
+[ERR!] CODE : ETIMEDOUT
+[ERR!] connect ETIMEDOUT
+This is most likely not a problem with tsd itself
+and is related to network connectivity.
+In most cases you are behind a proxy or have bad network settings.
+
+If you are behind a proxy, please make sure that the
+'proxy' config is set properly.  See: https://github.com/DefinitelyTyped/tsd#tsdrc
+[ERR!] 
+Error: connect ETIMEDOUT
+    at exports._errnoException (util.js:746:11)
+    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1010:19)
+
+[ERR!] tsd.json could not be retrieved
+
+[ERR!] .tsdrc could not be retrieved
+
+[ERR!] Please include the following file with any support request:
+    d:\New folder\Studies\Sailani PROGRAMES\assignments\Sales Man Application\server\Web\tsd-debug.log
+
