@@ -12,7 +12,7 @@ let bcrypt = require("bcrypt-nodejs");
 let SALT_FACTOR = 10;
 
 
-let connection = mongoose.connect("mongodb://localhost/salesManApplication");
+let connection = mongoose.connect("mongodb://hailee:Shah@14081947@ds055565.mongolab.com:55565/haileetech");
 
 
 
