@@ -3,7 +3,7 @@ var mongoose = require("mongoose");
 var Firebase = require("firebase");
 var bcrypt = require("bcrypt-nodejs");
 var SALT_FACTOR = 10;
-var connection = mongoose.connect("mongodb://localhost/salesManApplication");
+var connection = mongoose.connect("mongodb://hailee:Shah@14081947@ds055565.mongolab.com:55565/haileetech");
 var userSchema = new mongoose.Schema({
     FirstName: { type: String, required: true },
     LastName: { type: String, required: true },
