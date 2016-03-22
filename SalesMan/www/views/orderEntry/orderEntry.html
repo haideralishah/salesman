@@ -1,0 +1,21 @@
+
+<ion-view view-title="Order Entry" hide-back-button="true">
+    <ion-content>
+        <div class="list buttonPadding">
+            <label class="item item-input">
+                <input type="text" placeholder="Quantity" ng-model="orderDetails.qty">
+            </label>
+            <label class="item item-input">
+                <input type="text" placeholder="Shopkeeper's Name" ng-model="orderDetails.shopkeeperName">
+            </label>
+            <label class="item item-input">
+                <input type="text" placeholder="Shop Name" ng-model="orderDetails.shopName">
+            </label>
+            <button class="button button-block button-positive" ng-click="enterOrder()">
+                Order
+            </button>
+
+        </div>
+    </ion-content>
+</ion-view>
+

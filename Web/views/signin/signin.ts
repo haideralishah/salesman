@@ -10,6 +10,12 @@ angular.module('salesMan')
                  
                 // console.log(success);
                 var userData = success;
+                 console.log(userData.data._id);
+
+                 localStorage.setItem("token", success.data._id);
+
+                 $rootScope.userData = userData.data;
+
                 $http.post('/checkCoExist', userData)
                     .then(function(successsec) {
                      //   console.log(successsec);

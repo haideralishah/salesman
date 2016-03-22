@@ -12,7 +12,8 @@ let bcrypt = require("bcrypt-nodejs");
 let SALT_FACTOR = 10;
 
 
-let connection = mongoose.connect("mongodb://hailee:Shah@14081947@ds055565.mongolab.com:55565/haileetech");
+let connection = mongoose.connect("mongodb://localhost/salesManApplication");
+//let connection = mongoose.connect("mongodb://hailee:Shah@14081947@ds055565.mongolab.com:55565/haileetech");
 
 
 
@@ -54,8 +55,7 @@ let salesmanSchema = new mongoose.Schema({
     salesmanArea: { type: String, required: true },
     CompanyProfileUID: { type: String, required: true },
     CompanyOwnerUID: { type: String, required: true },
-
-
+    salesmanPassword: { type: String, default: "abc123" },
     CreatedOn: { type: Date, default: Date.now() }
 });
 
@@ -110,12 +110,12 @@ export function initializeModels(app) {
             if (error) {
                 console.log("Error creating user:", error);
             } else {
-                
+
                 console.log("Successfully created user account with uid:", userData.uid);
-                let user = new UserModel({ FirstName: req.body.firstName, LastName: req.body.lastName, Email: req.body.email, Password: req.body.password, firebaseUID :  userData.uid});
+                let user = new UserModel({ FirstName: req.body.firstName, LastName: req.body.lastName, Email: req.body.email, Password: req.body.password, firebaseUID: userData.uid });
 
                 user.save(function(err, success) {
-                   // console.log("user.save function")
+                    // console.log("user.save function")
                     if (err) {
                         console.log(err);
                         res.send(err);
@@ -125,15 +125,15 @@ export function initializeModels(app) {
                     }
 
                 });
-                
-                
+
+
             }
         });
 
         
         
         
-       // console.log("got request")
+        // console.log("got request")
        
 
     });
@@ -145,13 +145,11 @@ export function initializeModels(app) {
     //     if(isMatch) {
         
     //     }
-    // }
+    
 
     app.post("/signIn", (req, res) => {
         console.log("got request in Signin")
         let user = { Email: req.body.email, Password: req.body.password };
-
-
         UserModel
             .findOne({ Email: req.body.email }, (err, success) => {
                 if (err) {
@@ -171,22 +169,13 @@ export function initializeModels(app) {
                         else {
                             console.log("Wrong Password");
                             res.status("400");
-
                         }
-                    });
-                    
+                    });                    
                     // console.log(success);
-                    // console.log(req.body.password);
-                 
-                  
-                    
-
+                    // console.log(req.body.password);                                                      
                 }
             });
-
-
-
-
+    });
 
         app.post("/createCompany", (req, res) => {
             console.log("got request");
@@ -233,7 +222,7 @@ export function initializeModels(app) {
 
 
                 });
-
+        })
             app.post("/createSalesman", (req, res) => {
                 // console.log("got request");
                 // console.log(req.body);
@@ -277,8 +266,8 @@ export function initializeModels(app) {
 
                     });
             });
-            
-            
+
+
             app.post("/getSalesman", (req, res) => {
                 console.log("haider");
                 console.log(req.body.data);
@@ -299,5 +288,61 @@ export function initializeModels(app) {
                                 res.send(success);
                             }
                         }
-                    });
+                    })
+            })
 
+            app.post("/salesManSignIn", (req, res) => {
+                console.log("got request");
+                console.log(req.body);
+
+                SalesmanModel
+                    .findOne({ salesmanName: req.body.name, salesmanPassword: req.body.password }, (err, success) => {
+
+                        if (err) {
+
+                            res.send(err);
+                        }
+                        else {
+                            if (success == null) {
+                                // console.log("not exist");
+                                res.send(false);
+                            }
+                            else {
+                                //console.log("exist");
+                                res.send(success);
+                            }
+
+                        }
+
+                    })
+            });
+            
+            app.post("/productSearch", (req, res) => {
+                //  console.log(req.body.data);
+                 
+               ProductModel
+                    .find({ CompanyProfileUID: req.body.data.CompanyProfileUID }, (err, success) => {
+                        
+                        if (err) {
+
+                            res.send(err);
+                        }
+                        else {
+                            if (success == null) {
+                                // console.log("not exist");
+                                res.send(false);
+                            }
+                            else {
+                                //console.log("exist");
+                                res.send(success);
+                            }
+                        }
+                        
+                        
+                        
+                    });
+            
+            
+            });         
+            
+}

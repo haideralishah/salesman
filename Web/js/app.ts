@@ -32,11 +32,21 @@ app.config(($stateProvider, $urlRouterProvider) => {
           controller: 'creatProductController',
           templateUrl: 'views/creatProduct/creatProduct.html'
       })
+      .state('orderDetails', {
+          url: '/orderDetails',
+          controller: 'orderDetailsController',
+          templateUrl: 'views/orderDetails/orderDetails.html'
+      })
+        .state('orderName', {
+          url: '/orderName',
+          controller: 'orderNameController',
+          templateUrl: 'views/orderName/orderName.html'
+      });
     
 
     $urlRouterProvider
        .otherwise('/signin');
-  })
+  });
 
 	
 

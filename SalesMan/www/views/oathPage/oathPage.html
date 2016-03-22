@@ -1,0 +1,26 @@
+<ion-view view-title="Login" hide-back-button="true">
+    <ion-content>
+
+
+
+        <div class="buttonPadding">
+<!--        <button class="button button-block button-positive" ng-click="login()">
+            Login with Facebook
+        </button>-->
+            <div class="list topMargin">
+                <label class="item item-input">
+                    <input type="text" placeholder="Salesman Name" ng-model="salesman.name">
+                </label>
+                <label class="item item-input">
+                    <input type="password" placeholder="Password" ng-model="salesman.password">
+                </label>
+
+            </div>
+
+        <button class="button button-block button-positive" ng-click="signInSalesman(salesman)">
+            Salesman Login
+        </button>
+
+        </div>
+    </ion-content>
+</ion-view>

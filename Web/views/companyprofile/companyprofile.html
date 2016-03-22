@@ -2,10 +2,27 @@
 
 
 <div layout="row">
-    <md-button class="md-raised md-primary cprofileButtonMarginRight " ng-click="createSalesman()">New Salesman</md-button>
+    <md-button class="md-raised md-primary  " ng-click="createSalesman()">New Salesman</md-button>
 
     <md-button class="md-raised md-primary  cprofileButtonMarginLeft" ng-click="createProduct()">New Products</md-button>
 
+    <md-button class="md-raised md-primary  cprofileButtonMarginLeft" ng-click="seeOrders()">See Orders</md-button>
+
 </div>
 
-<div ng-repeat="sm in salesMan">{{sm.salesmanName}}</div>
+<!--<div ng-repeat="sm in salesMan">{{sm.salesmanName}}</div>-->
+
+<md-content>
+    <h1>{{firebaseArr.length}}</h1>
+    <md-list>
+        <md-list-item class="md-3-line" ng-repeat="sm in salesMan">
+            <div class="md-list-item-text">
+                <h3>{{sm.salesmanName}}</h3>
+                <!--<h4>{{sm.salesmanArea}}</h4>-->
+                <p>{{sm.salesmanArea}}</p>
+            </div>
+            <!--<md-button class="md-secondary">Respond</md-button>-->
+            <md-divider ng-if="!$last"></md-divider>
+        </md-list-item>
+    </md-list>
+</md-content>

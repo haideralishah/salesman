@@ -23,3 +23,10 @@
 .cprofileButtonMarginRight{
     margin-right: 10%;
 }
+
+#map {
+    height: 500px;
+    width: 80%;
+
+}
+

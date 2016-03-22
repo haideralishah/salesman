@@ -1,0 +1,25 @@
+
+
+<ion-view view-title="Order" hide-back-button="true">
+    <ion-content>
+       <!-- <li ng-repeat="a in Products">
+            <ul>{{a.ProductName}}</ul>
+
+        </li>-->
+<!--
+        <ul class="list">
+            <li class="item" ng-repeat="a in Products" ui-sref="orderEntry">
+                {{a.ProductName}}
+            </li>
+        </ul>-->
+
+        <div class="list list-inset">
+
+            <div class="item item-divider" ng-repeat="a in Products" ui-sref="orderEntry({ prodName: a.ProductName })">
+                {{a.ProductName}}
+            </div>
+        </div>
+
+    </ion-content>
+</ion-view>
+

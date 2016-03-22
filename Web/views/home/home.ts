@@ -1,9 +1,8 @@
 angular.module('salesMan')
 
   .controller('homeController', ($rootScope, $scope, $http, $state)=>{
-      
-      
-   
+
+
  //      $scope.coData.UID = $rootScope.users;
       
        console.log($rootScope.userData.data._id);
