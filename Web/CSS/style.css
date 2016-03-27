@@ -24,9 +24,71 @@
     margin-right: 10%;
 }
 
-#map {
-    height: 500px;
-    width: 80%;
+
+.topMargin{
+    margin-top: 1em;
+}
+.bottomMargin{
+
+    margin-bottom: 2em;
+}
+
+
+.col1Of3, .col2Of3, .col3Of3{
+    float: left;
+    width: 25%;
+    margin: 3%;
 
 }
+
+
+.orderDetailsh1 {
+    text-align: center;
+}
+
+
+.mapCol1of2{
+    float: left;
+    width: 30%;
+    margin: 3%;
+}
+
+.mapCol2of2{
+    /*float: left;*/
+    /*width: 70%;*/
+    /*margin: 3%;*/
+}
+
+#map {
+    float: left;
+    height: 500px;
+    width: 50%;
+    margin: 3%;
+
+}
+
+
+
+td, th{
+
+
+    /*border:1px solid black;*/
+    padding: 0 0;
+
+    /*margin: 2%*/;
+
+/*    column-width: 200px;*/
+    /*font-size: 20px;*/
+
+
+}
+tr{
+    width: 400px;
+}
+
+.tabeHover:hover{
+    background-color: #a2c5ff;
+}
+
+
 

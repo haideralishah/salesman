@@ -23,7 +23,7 @@ let userSchema = new mongoose.Schema({
     LastName: { type: String, required: true },
     Email: { type: String, required: true },
     Password: { type: String, required: true },
-    
+
     firebaseUID: { type: String, required: true },
 
     CreatedOn: { type: Date, default: Date.now() }
@@ -57,6 +57,18 @@ let salesmanSchema = new mongoose.Schema({
     CompanyOwnerUID: { type: String, required: true },
     salesmanPassword: { type: String, default: "abc123" },
     CreatedOn: { type: Date, default: Date.now() }
+});
+
+let orderSchema = new mongoose.Schema({
+    ProductName: { type: String, required: true },
+    ProductPrice: { type: Number, required: true },
+    lat: { type: Number, required: true },
+    long: { type: Number, required: true },
+    qty: { type: Number, required: true },
+    shopName: { type: String, required: true },
+    shopkeeperName: { type: String, required: true },
+    CompanyOwnerUID: { type: String, required: true } 
+    
 });
 
 
@@ -93,15 +105,17 @@ let UserModel = mongoose.model("users", userSchema);
 
 let CompanyModel = mongoose.model("company", companySchema);
 
+
 let ProductModel = mongoose.model("product", productSchema);
 
 let SalesmanModel = mongoose.model("Salesman", salesmanSchema);
 
+let OrderModel = mongoose.model("Order", orderSchema);
+
 
 export function initializeModels(app) {
+
     app.post("/signup", (req, res) => {
-
-
         let ref = new Firebase("https://intense-inferno-4383.firebaseio.com");
         ref.createUser({
             email: req.body.email,
@@ -125,27 +139,9 @@ export function initializeModels(app) {
                     }
 
                 });
-
-
             }
         });
-
-        
-        
-        
-        // console.log("got request")
-       
-
     });
-
-
-
-    // var done = function(err, isMatch){
-    //     console.log(err, isMatch);
-    //     if(isMatch) {
-        
-    //     }
-    
 
     app.post("/signIn", (req, res) => {
         console.log("got request in Signin")
@@ -170,179 +166,263 @@ export function initializeModels(app) {
                             console.log("Wrong Password");
                             res.status("400");
                         }
-                    });                    
+                    });
                     // console.log(success);
                     // console.log(req.body.password);                                                      
                 }
             });
     });
 
-        app.post("/createCompany", (req, res) => {
-            console.log("got request");
-            console.log(req.body);
+    app.post("/createCompany", (req, res) => {
+        console.log("got request");
+        console.log(req.body);
 
-            let company = new CompanyModel({ CompanyName: req.body.name, CompanyEmail: req.body.email, CompanyOwnerUID: req.body.comOwnUID, CompanyContact: req.body.Contact });
+        let company = new CompanyModel({ CompanyName: req.body.name, CompanyEmail: req.body.email, CompanyOwnerUID: req.body.comOwnUID, CompanyContact: req.body.Contact });
 
-            company.save(function(err, success) {
-                console.log("user.save function")
+        company.save(function(err, success) {
+            console.log("user.save function")
+            if (err) {
+                console.log(err);
+                res.send(err);
+            } else {
+                console.log(success + "haider")
+                res.send({ message: "Inserted Successfully", data: success });
+            }
+
+        });
+
+
+    });
+
+    app.post("/checkCoExist", (req, res) => {
+        // console.log(req.body.data._id);
+
+        CompanyModel
+            .findOne({ CompanyOwnerUID: req.body.data._id }, (err, success) => {
                 if (err) {
-                    console.log(err);
+
+                    res.send(err);
+                }
+                else {
+                    // console.log(success);
+                    if (success == null) {
+                        // console.log("not exist");
+                        res.send(false);
+                    }
+                    else {
+                        //console.log("exist");
+                        res.send(success);
+                    }
+
+                }
+
+
+            });
+    });
+
+
+    app.post("/createSalesman", (req, res) => {
+        // console.log("got request");
+        // console.log(req.body);
+        // res.end();
+
+        let salesMan = new SalesmanModel({ salesmanName: req.body.name, salesmanArea: req.body.Allocated, CompanyOwnerUID: req.body.CompanyOwnerUID, CompanyProfileUID: req.body.companyProfID });
+
+        salesMan
+            .save(function(err, success) {
+                console.log("salesMan.save function")
+                if (err) {
+                    //   console.log(err);
                     res.send(err);
                 } else {
-                    console.log(success + "haider")
-                    res.send({ message: "Inserted Successfully", data: success });
+                    //  console.log(success)
+                    res.send(success);
                 }
 
             });
 
 
-        });
+    });
 
-        app.post("/checkCoExist", (req, res) => {
-            // console.log(req.body.data._id);
-  
-            CompanyModel
-                .findOne({ CompanyOwnerUID: req.body.data._id }, (err, success) => {
-                    if (err) {
+    app.post("/createProduct", (req, res) => {
+        // console.log("got request");
+        //console.log(req.body);
+        //res.end();
 
-                        res.send(err);
+        let product = new ProductModel({ ProductName: req.body.name, ProductPrice: req.body.price, CompanyOwnerUID: req.body.CompanyOwnerUID, CompanyProfileUID: req.body.companyProfID });
+
+        product
+            .save(function(err, success) {
+                //console.log("product.save function")
+                if (err) {
+                    //   console.log(err);
+                    res.send(err);
+                } else {
+                    //  console.log(success)
+                    res.send(success);
+                }
+
+            });
+    });
+
+
+    app.post("/getSalesman", (req, res) => {
+        console.log("haider");
+        console.log(req.body.data);
+        SalesmanModel
+            .find({ CompanyProfileUID: req.body.data._id }, (err, success) => {
+                if (err) {
+
+                    res.send(err);
+                }
+                else {
+                    // console.log(success);
+                    if (success == null) {
+                        // console.log("not exist");
+                        res.send(false);
+                    }
+                    else {
+                        //console.log("exist");
+                        res.send(success);
+                    }
+                }
+            })
+    })
+
+    app.post("/salesManSignIn", (req, res) => {
+        console.log("got request");
+        console.log(req.body);
+
+        SalesmanModel
+            .findOne({ salesmanName: req.body.name, salesmanPassword: req.body.password }, (err, success) => {
+
+                if (err) {
+
+                    res.send(err);
+                }
+                else {
+                    if (success == null) {
+                        // console.log("not exist");
+                        res.send(false);
+                    }
+                    else {
+                        //console.log("exist");
+                        res.send(success);
+                    }
+
+                }
+
+            })
+    });
+
+    app.post("/productSearch", (req, res) => {
+        //  console.log(req.body.data);
+
+        ProductModel
+            .find({ CompanyProfileUID: req.body.data.CompanyProfileUID }, (err, success) => {
+
+                if (err) {
+
+                    res.send(err);
+                }
+                else {
+                    if (success == null) {
+                        // console.log("not exist");
+                        res.send(false);
                     }
                     else {
                         // console.log(success);
-                        if (success == null) {
-                            // console.log("not exist");
-                            res.send(false);
-                        }
-                        else {
-                            //console.log("exist");
-                            res.send(success);
-                        }
-
+                        res.send(success);
                     }
+                }
 
-
-                });
-        })
-            app.post("/createSalesman", (req, res) => {
-                // console.log("got request");
-                // console.log(req.body);
-                // res.end();
-                
-                let salesMan = new SalesmanModel({ salesmanName: req.body.name, salesmanArea: req.body.Allocated, CompanyOwnerUID: req.body.CompanyOwnerUID, CompanyProfileUID: req.body.companyProfID });
-
-                salesMan
-                    .save(function(err, success) {
-                        console.log("salesMan.save function")
-                        if (err) {
-                            //   console.log(err);
-                            res.send(err);
-                        } else {
-                            //  console.log(success)
-                            res.send(success);
-                        }
-
-                    });
 
 
             });
 
-            app.post("/createProduct", (req, res) => {
-                // console.log("got request");
-                //console.log(req.body);
-                //res.end();
 
-                let product = new ProductModel({ ProductName: req.body.name, ProductPrice: req.body.price, CompanyOwnerUID: req.body.CompanyOwnerUID, CompanyProfileUID: req.body.companyProfID });
+    });
 
-                product
-                    .save(function(err, success) {
-                        //console.log("product.save function")
-                        if (err) {
-                            //   console.log(err);
-                            res.send(err);
-                        } else {
-                            //  console.log(success)
-                            res.send(success);
-                        }
 
-                    });
+    app.post("/prodSearch", (req, res) => {
+        console.log(req.body.data);
+
+        ProductModel
+            .find({ CompanyOwnerUID: req.body.data.CompanyOwnerUID }, (err, success) => {
+
+                if (err) {
+
+                    res.send(err);
+                }
+                else {
+                    if (success == null) {
+                        // console.log("not exist");
+                        res.send(false);
+                    }
+                    else {
+                        console.log(success);
+                        res.send(success);
+                    }
+                }
+
+
+
             });
 
 
-            app.post("/getSalesman", (req, res) => {
-                console.log("haider");
-                console.log(req.body.data);
-                SalesmanModel
-                    .find({ CompanyProfileUID: req.body.data._id }, (err, success) => {
-                        if (err) {
+    });
 
-                            res.send(err);
-                        }
-                        else {
-                            // console.log(success);
-                            if (success == null) {
-                                // console.log("not exist");
-                                res.send(false);
-                            }
-                            else {
-                                //console.log("exist");
-                                res.send(success);
-                            }
-                        }
-                    })
-            })
 
-            app.post("/salesManSignIn", (req, res) => {
-                console.log("got request");
-                console.log(req.body);
+    app.post("/addProd", (req, res) => {
+        console.log("addProd");
+        console.log(req.body);
+        let order = new OrderModel({ ProductName: req.body.ProductName, ProductPrice: req.body.ProductPrice, lat: req.body.lat, long: req.body.long, qty: req.body.qty, shopName: req.body.shopName, shopkeeperName: req.body.shopkeeperName, CompanyOwnerUID: req.body.CompanyOwnerUID});
+        
+        order.save(function(err, success) {
+            console.log("Order.save function")
+            if (err) {
+                console.log(err);
+                res.send(err);
+            } else {
+                console.log(success + "haider")
+                res.send({ message: "Inserted Successfully", data: success });
+            }
 
-                SalesmanModel
-                    .findOne({ salesmanName: req.body.name, salesmanPassword: req.body.password }, (err, success) => {
+        });
 
-                        if (err) {
 
-                            res.send(err);
-                        }
-                        else {
-                            if (success == null) {
-                                // console.log("not exist");
-                                res.send(false);
-                            }
-                            else {
-                                //console.log("exist");
-                                res.send(success);
-                            }
+    });
 
-                        }
 
-                    })
+  app.post("/orderSearch", (req, res) => {
+        console.log(req.body.data);
+
+        OrderModel
+            .find({ CompanyOwnerUID: req.body.data.CompanyOwnerUID }, (err, success) => {
+
+                if (err) {
+
+                    res.send(err);
+                }
+                else {
+                    if (success == null) {
+                        // console.log("not exist");
+                        res.send(false);
+                    }
+                    else {
+                        console.log(success);
+                        res.send(success);
+                    }
+                }
+
+
+
             });
-            
-            app.post("/productSearch", (req, res) => {
-                //  console.log(req.body.data);
-                 
-               ProductModel
-                    .find({ CompanyProfileUID: req.body.data.CompanyProfileUID }, (err, success) => {
-                        
-                        if (err) {
 
-                            res.send(err);
-                        }
-                        else {
-                            if (success == null) {
-                                // console.log("not exist");
-                                res.send(false);
-                            }
-                            else {
-                                //console.log("exist");
-                                res.send(success);
-                            }
-                        }
-                        
-                        
-                        
-                    });
-            
-            
-            });         
-            
+
+    });
+
+
+
+
 }

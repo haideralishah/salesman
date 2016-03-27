@@ -11,7 +11,7 @@ angular.module('salesMan')
             $rootScope.userData = userData.data;
             $http.post('/checkCoExist', userData)
                 .then(function (successsec) {
-                //   console.log(successsec);
+                //  console.log(successsec);
                 if (successsec.data == false) {
                     $rootScope.userData = success;
                     $state.go("home");
@@ -19,6 +19,7 @@ angular.module('salesMan')
                 else {
                     $rootScope.userData = success;
                     $rootScope.companyData = successsec;
+                    // console.log(successsec);
                     $state.go("companyprofile");
                 }
                 // $rootScope.userData = success;

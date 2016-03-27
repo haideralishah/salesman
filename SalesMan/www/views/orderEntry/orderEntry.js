@@ -31,6 +31,8 @@ angular.module('salesMan')
 
                     $scope.orderDetails.lat = lat;
                     $scope.orderDetails.long = long;
+                    //console.log($stateParams.prodPrice);
+                    $scope.orderDetails.ProductPrice = $stateParams.prodPrice;
                     $scope.orderDetails.ProductName = $stateParams.prodName;
 
                     $scope.addItem(firebaseArr);

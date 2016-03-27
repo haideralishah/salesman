@@ -1,6 +1,9 @@
 angular.module('salesMan')
 
     .controller('orderDetailsController', ($rootScope, $scope)=>{
+
+
+
         var abc = $rootScope.orderDetails;
         console.log(abc);
 

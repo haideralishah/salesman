@@ -19,7 +19,7 @@ angular.module('salesMan', ['ionic', 'ngCordova', 'firebase'])
             templateUrl: 'views/orderPage/orderPage.html'
           })
           .state('orderEntry', {
-              url: '/orderEntry/:prodName',
+              url: '/orderEntry/:prodName?prodPrice',
               controller: 'orderEntryController',
               templateUrl: 'views/orderEntry/orderEntry.html'
           });

@@ -35,6 +35,16 @@ var salesmanSchema = new mongoose.Schema({
     salesmanPassword: { type: String, default: "abc123" },
     CreatedOn: { type: Date, default: Date.now() }
 });
+var orderSchema = new mongoose.Schema({
+    ProductName: { type: String, required: true },
+    ProductPrice: { type: Number, required: true },
+    lat: { type: Number, required: true },
+    long: { type: Number, required: true },
+    qty: { type: Number, required: true },
+    shopName: { type: String, required: true },
+    shopkeeperName: { type: String, required: true },
+    CompanyOwnerUID: { type: String, required: true }
+});
 var noop = function () { };
 userSchema.pre("save", function (done) {
     var user = this;
@@ -63,6 +73,7 @@ var UserModel = mongoose.model("users", userSchema);
 var CompanyModel = mongoose.model("company", companySchema);
 var ProductModel = mongoose.model("product", productSchema);
 var SalesmanModel = mongoose.model("Salesman", salesmanSchema);
+var OrderModel = mongoose.model("Order", orderSchema);
 function initializeModels(app) {
     app.post("/signup", function (req, res) {
         var ref = new Firebase("https://intense-inferno-4383.firebaseio.com");
@@ -89,12 +100,7 @@ function initializeModels(app) {
                 });
             }
         });
-        // console.log("got request")
     });
-    // var done = function(err, isMatch){
-    //     console.log(err, isMatch);
-    //     if(isMatch) {
-    //     }
     app.post("/signIn", function (req, res) {
         console.log("got request in Signin");
         var user = { Email: req.body.email, Password: req.body.password };
@@ -248,7 +254,61 @@ function initializeModels(app) {
                     res.send(false);
                 }
                 else {
-                    //console.log("exist");
+                    // console.log(success);
+                    res.send(success);
+                }
+            }
+        });
+    });
+    app.post("/prodSearch", function (req, res) {
+        console.log(req.body.data);
+        ProductModel
+            .find({ CompanyOwnerUID: req.body.data.CompanyOwnerUID }, function (err, success) {
+            if (err) {
+                res.send(err);
+            }
+            else {
+                if (success == null) {
+                    // console.log("not exist");
+                    res.send(false);
+                }
+                else {
+                    console.log(success);
+                    res.send(success);
+                }
+            }
+        });
+    });
+    app.post("/addProd", function (req, res) {
+        console.log("addProd");
+        console.log(req.body);
+        var order = new OrderModel({ ProductName: req.body.ProductName, ProductPrice: req.body.ProductPrice, lat: req.body.lat, long: req.body.long, qty: req.body.qty, shopName: req.body.shopName, shopkeeperName: req.body.shopkeeperName, CompanyOwnerUID: req.body.CompanyOwnerUID });
+        order.save(function (err, success) {
+            console.log("Order.save function");
+            if (err) {
+                console.log(err);
+                res.send(err);
+            }
+            else {
+                console.log(success + "haider");
+                res.send({ message: "Inserted Successfully", data: success });
+            }
+        });
+    });
+    app.post("/orderSearch", function (req, res) {
+        console.log(req.body.data);
+        OrderModel
+            .find({ CompanyOwnerUID: req.body.data.CompanyOwnerUID }, function (err, success) {
+            if (err) {
+                res.send(err);
+            }
+            else {
+                if (success == null) {
+                    // console.log("not exist");
+                    res.send(false);
+                }
+                else {
+                    console.log(success);
                     res.send(success);
                 }
             }

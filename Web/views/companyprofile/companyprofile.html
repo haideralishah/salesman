@@ -1,28 +1,112 @@
-<h1>Welcome to {{companyData.CompanyName}}</h1>
 
 
-<div layout="row">
-    <md-button class="md-raised md-primary  " ng-click="createSalesman()">New Salesman</md-button>
+<h1 class="centerAlignment topMargin bottomMargin">Welcome to {{companyData.CompanyName}}</h1>
+
+
+<div class="col1Of3 bottomMargin topMargin">
+    <h1>Salesman</h1>
+    <table cellspacing="20">
+        <tr>
+            <th>Salesman Name</th>
+            <th>Allocated Area</th>
+        </tr>
+        <tr ng-repeat="sm in salesMan">
+            <td>{{sm.salesmanName}}</td>
+            <td>{{sm.salesmanArea}}</td>
+        </tr>
+    </table>
+    <md-button class="md-raised md-primary" ng-click="createSalesman()">New Salesman</md-button>
+</div>
+
+
+<div class="col2Of3 bottomMargin topMargin">
+    <h1>Available Products</h1>
+    <table cellspacing="20">
+        <tr>
+            <th>Product Name</th>
+            <th>Product Price</th>
+        </tr>
+        <tr ng-repeat="pr in product">
+            <td>{{pr.ProductName}}</td>
+            <td>{{pr.ProductPrice}}</td>
+        </tr>
+    </table>
+    <md-button class="md-raised md-primary" ng-click="createProduct()">New Products</md-button>
+</div>
+
+
+
+<div class="col3Of3 bottomMargin topMargin">
+    <h1>Orders</h1>
+    <table cellspacing="20">
+        <tr>
+            <th>Shop Name</th>
+            <th>Product Name</th>
+            <th>Quantity</th>
+        </tr>
+
+        <tr ng-click="saveToRootaa(tempOrder)" class="tabeHover">
+            <td>{{tempOrder.shopName}}</td>
+            <td>{{tempOrder.ProductName}}</td>
+            <td>{{tempOrder.qty}}</td>
+        </tr>
+
+        <tr ng-repeat="f in firebaseArr" ng-click="saveToRoot(f)" class="tabeHover">
+            <td>{{f.shopName}}</td>
+            <td>{{f.ProductName}}</td>
+            <td>{{f.qty}}</td>
+        </tr>
+
+        <tr ng-repeat="o in orders" ui-sref="orderDetails" ng-click="saveToRootaa(o)" class="tabeHover">
+            <td>{{o.shopName}}</td>
+            <td>{{o.ProductName}}</td>
+            <td>{{o.qty}}</td>
+        </tr>
+
+    </table>
+    <!--<md-button class="md-raised md-primary  cprofileButtonMarginLeft" ng-click="createProduct()">New Products</md-button>-->
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<h3 ng-repeat="f in firebaseArr" ui-sref="orderDetails" ng-click="saveToRoot(f)">{{f.shopName}}</h3>-->
+
+<!--
+<div class="bottomMargin topMargin">
+    <md-button class="md-raised md-primary" ng-click="createSalesman()">New Salesman</md-button>
 
     <md-button class="md-raised md-primary  cprofileButtonMarginLeft" ng-click="createProduct()">New Products</md-button>
 
     <md-button class="md-raised md-primary  cprofileButtonMarginLeft" ng-click="seeOrders()">See Orders</md-button>
 
-</div>
+</div>-->
 
 <!--<div ng-repeat="sm in salesMan">{{sm.salesmanName}}</div>-->
 
-<md-content>
-    <h1>{{firebaseArr.length}}</h1>
-    <md-list>
-        <md-list-item class="md-3-line" ng-repeat="sm in salesMan">
-            <div class="md-list-item-text">
-                <h3>{{sm.salesmanName}}</h3>
-                <!--<h4>{{sm.salesmanArea}}</h4>-->
-                <p>{{sm.salesmanArea}}</p>
-            </div>
-            <!--<md-button class="md-secondary">Respond</md-button>-->
-            <md-divider ng-if="!$last"></md-divider>
-        </md-list-item>
-    </md-list>
-</md-content>
+<!--<md-content>-->
+
+    <!--<md-list>-->
+        <!--<md-list-item class="md-3-line" ng-repeat="sm in salesMan">-->
+            <!--<div class="md-list-item-text">-->
+                <!--<h3>{{sm.salesmanName}}</h3>-->
+                <!--&lt;!&ndash;<h4>{{sm.salesmanArea}}</h4>&ndash;&gt;-->
+                <!--<p>{{sm.salesmanArea}}</p>-->
+            <!--</div>-->
+            <!--&lt;!&ndash;<md-button class="md-secondary">Respond</md-button>&ndash;&gt;-->
+            <!--<md-divider ng-if="!$last"></md-divider>-->
+        <!--</md-list-item>-->
+    <!--</md-list>-->
+<!--</md-content>-->

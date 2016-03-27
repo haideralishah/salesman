@@ -2,9 +2,9 @@ angular.module('salesMan')
 
   .controller('signinController', ($rootScope, $scope, $http, $state)=>{
         $scope.userDetails = [];
-    
+
         $scope.signIn = function (){
-         
+
          $http.post("/signIn", $scope.userData)
              .then(function(success){
                  
@@ -16,9 +16,11 @@ angular.module('salesMan')
 
                  $rootScope.userData = userData.data;
 
-                $http.post('/checkCoExist', userData)
+
+
+                     $http.post('/checkCoExist', userData)
                     .then(function(successsec) {
-                     //   console.log(successsec);
+                        //  console.log(successsec);
                         
                         if(successsec.data == false){
                             $rootScope.userData = success;
@@ -27,10 +29,13 @@ angular.module('salesMan')
                         else{
                             $rootScope.userData = success;
                             $rootScope.companyData = successsec;
+                           // console.log(successsec);
                             $state.go("companyprofile");
                             
                         }
-                        
+
+
+
                         // $rootScope.userData = success;
                         // $state.go("home");
 

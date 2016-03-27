@@ -15,7 +15,7 @@
 
         <div class="list list-inset">
 
-            <div class="item item-divider" ng-repeat="a in Products" ui-sref="orderEntry({ prodName: a.ProductName })">
+            <div class="item item-divider" ng-repeat="a in Products" ui-sref="orderEntry({ prodName: a.ProductName, prodPrice: a.ProductPrice })">
                 {{a.ProductName}}
             </div>
         </div>
